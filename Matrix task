@@ -22,47 +22,61 @@ u = 0
 s = -1
 p = 0
 ss = -1
+count = 0 # лічильник для загального циклу
 while v[m] != a**2: #general loop
+    count += 1
     s = 0
     ss += 1
     d = 0
     u += 1
     p += 1
+    
+    if (m == a**2 - a): break # провірочки такі перед кожним фором, щоб не було index out of range
     for j in matrix: # and next loops for each side 
         matrix[s + ss][k-p] = v[m] 
         d += 1
         s += 1
         m += 1
-    while d == a-u:
+        if d == a-u:   # while не робить нічого (break відразу його саме завершував, а не for)
             break
     d = 0
+    if (m == a**2 - a): break
     for j in matrix:
         matrix[e-1][n-2] =v[m]
         n -= 1
         m += 1
         d += 1
-    while d == a-1:
-        break
+        if d == a-u: # так само як і тут (1 на u замінюю для динамічності)
+            break
     d = 0
     if a != 2:
+        if (m == a**2 - a): break
         for j in matrix:
-            matrix[f-2][0] =v[m]
+            matrix[f-2][count - 1] =v[m] #теж для динамічності
             m += 1
             f -= 1
             d += 1
-            if d == a-2:
+            if d == a - (2 * count): # як і тут
                 break
         d = 0
+        if (m == a**2 - a): break
         for j in matrix:
             matrix[l][r+1] = v[m]
             m += 1
             r += 1
             d += 1
-            if d == a-2:
+            if d == a - (2 * count):
                 break
-        if d == a-1:
-            v[m] == a**2
-        u += 1
+        #if d == a-1:
+        #    v[m] == a**2
+        
+        n = -count #
+        f = -count #
+        r = count  #      Тут оновлюються індексові змінні. 
+        l += 1     #      Помилка index out of range була, тому що вони в тебе збільшувались постійно :p
+        e -= 1     #      Має працювати з любим a > 3
+        u += 1     #
+        
     if m == (a**2 - a):
         break
 for i in matrix:
